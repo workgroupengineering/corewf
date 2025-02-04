@@ -400,7 +400,7 @@ public class WorflowInstanceResumeBookmarkAsyncTests
             {
                 new TestDelay()
                 {
-                    Duration = TimeSpan.FromMilliseconds(100)
+                    Duration = TimeSpan.FromMilliseconds(200)
                 },
             }
         };
@@ -416,7 +416,7 @@ public class WorflowInstanceResumeBookmarkAsyncTests
     [Fact]
     public static void TestNoPersistSerialization()
     {
-        TestSequence testSequence = new() { Activities = { new TestNoPersist() }};
+        TestSequence testSequence = new() { Activities = { new TestNoPersist() } };
         WorkflowApplicationTestExtensions.Persistence.FileInstanceStore jsonStore = new WorkflowApplicationTestExtensions.Persistence.FileInstanceStore(".\\~");
         TestWorkflowRuntime workflowRuntime = TestRuntime.CreateTestWorkflowRuntime(testSequence, null, jsonStore, PersistableIdleAction.Unload);
         workflowRuntime.ExecuteWorkflow();
