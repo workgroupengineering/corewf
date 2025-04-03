@@ -234,13 +234,13 @@ namespace TestCases.Workflows
             location.Declare(new Variable<string>("in_CountryName"), seq, ref errors);
             location.Declare(new Variable<DataTable>("in_dt_OrderExport"), seq, ref errors);
             namespaces = ["System", "System.Linq", "System.Data"];
-            assemblyReferences = 
+            assemblyReferences =
             [
-                new AssemblyReference() { Assembly = typeof(string).Assembly }, 
-                new AssemblyReference() { Assembly = typeof(DataTable).Assembly }, 
-                new AssemblyReference() { Assembly = typeof(Enumerable).Assembly }, 
-                new AssemblyReference() { Assembly = typeof(System.ComponentModel.TypeConverter).Assembly }, 
-                new AssemblyReference() { Assembly = typeof(IServiceProvider).Assembly }, 
+                new AssemblyReference() { Assembly = typeof(string).Assembly },
+                new AssemblyReference() { Assembly = typeof(DataTable).Assembly },
+                new AssemblyReference() { Assembly = typeof(Enumerable).Assembly },
+                new AssemblyReference() { Assembly = typeof(System.ComponentModel.TypeConverter).Assembly },
+                new AssemblyReference() { Assembly = typeof(IServiceProvider).Assembly },
                 new AssemblyReference() { Assembly = Assembly.Load("System.Xml.ReaderWriter") },
                 new AssemblyReference() { Assembly = Assembly.Load("System.Private.Xml") }
             ];
@@ -383,7 +383,7 @@ namespace TestCases.Workflows
             // Same applies to VB, they both go through the shared code, so no point in duplicating the test.
             var location = new ActivityLocationReferenceEnvironment();
             var loadContext = new AssemblyLoadContext("MyCollectibleALC", true);
-            loadContext.LoadFromAssemblyPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,@"TestData\JsonFileInstanceStore.dll"));
+            loadContext.LoadFromAssemblyPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"TestData\JsonFileInstanceStore.dll"));
 
             var result = await CSharpDesignerHelper.CreatePrecompiledValueAsync(typeof(object), "new List<Dictionary<string, FileInstanceStore[]>>()", new[] { "System.Collections.Generic", "JsonFileInstanceStore" }, new[] { (AssemblyReference)new AssemblyName("JsonFileInstanceStore") }, location);
             result.ReturnType.FullName.ShouldBe("System.Collections.Generic.List`1[[System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[JsonFileInstanceStore.FileInstanceStore[], JsonFileInstanceStore, Version=6.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]");
