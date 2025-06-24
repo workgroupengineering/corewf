@@ -52,12 +52,15 @@ public class CSharpExpressionValidator : RoslynExpressionValidator
         var metadataReferences = GetMetadataReferencesForExpression(assemblies);
 
         var options = CompilerHelper.DefaultCompilationUnit.Options as CSharpCompilationOptions;
-        var compilation = CompilerHelper.DefaultCompilationUnit.WithOptions(options.WithUsings(namespaces)).WithReferences(metadataReferences);
 
-        if(validationSettings?.MissingAssemblyResolver is Func<AssemblyName, Assembly> resolver)
+        options = options.WithUsings(namespaces);
+
+        if (validationSettings?.MissingAssemblyResolver is Func<AssemblyName, Assembly> resolver)
         {
-            compilation = compilation.WithOptions(options.WithMetadataReferenceResolver(new ExternalMetadataReferenceResolver(resolver)));
+            options = options.WithMetadataReferenceResolver(new ExternalMetadataReferenceResolver(resolver));
         }
+
+        var compilation = CompilerHelper.DefaultCompilationUnit.WithOptions(options).WithReferences(metadataReferences);
 
         return compilation;
     }
