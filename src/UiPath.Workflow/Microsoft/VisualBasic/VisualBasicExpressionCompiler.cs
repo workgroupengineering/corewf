@@ -49,8 +49,8 @@ internal sealed class VisualBasicExpressionCompiler : ExpressionCompiler
                 .Where(var => var.Type != null)
                 .ToArray();
 
-        var names = string.Join(CompilerHelper.Comma, resolvedIdentifiers.Select(var => var.Name));
-        var types = string.Join(CompilerHelper.Comma, resolvedIdentifiers.Select(var => var.Type).Concat(new[] { returnType }).Select(_compilerHelper.GetTypeName));
+        var names = resolvedIdentifiers.Select(var => var.Name).ToArray();
+        var types = resolvedIdentifiers.Select(var => var.Type).Concat(new[] { returnType }).Select(_compilerHelper.GetTypeName).ToArray();
         var lambdaFuncCode = _compilerHelper.CreateExpressionCode(types, names, expression);
         return VisualBasicSyntaxTree.ParseText(lambdaFuncCode, _compilerHelper.ScriptParseOptions);
     }
