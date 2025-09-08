@@ -405,10 +405,9 @@ public class WorflowInstanceResumeBookmarkAsyncTests
             }
         };
         
-        var unloaded = new ManualResetEvent(false);
-        var completed = new ManualResetEvent(false);
+        using var unloaded = new ManualResetEvent(false);
+        using var completed = new ManualResetEvent(false);
         var instanceStore = new MemoryInstanceStore();
-        Guid workflowInstanceId = Guid.Empty;
         
         WorkflowApplication workflowApplication = new WorkflowApplication(testSequence);
         workflowApplication.InstanceStore = instanceStore;
@@ -416,7 +415,7 @@ public class WorflowInstanceResumeBookmarkAsyncTests
         workflowApplication.Unloaded = (_) => unloaded.Set();
         
         workflowApplication.Run();
-        workflowInstanceId = workflowApplication.Id;
+        var workflowInstanceId = workflowApplication.Id;
         unloaded.WaitOne(); // Wait for workflow to unload after persistable idle
         
         // Create a new WorkflowApplication instance to load and resume the workflow
